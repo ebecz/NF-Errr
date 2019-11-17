@@ -2,10 +2,11 @@
 import tkinter as tk
 from tkinter import *
 import locale
-from nfe import download_json, download_png_path as nfe
+from nfe import download_json, nfe_create_pdf
 from datetime import datetime
 from scan_webcam import scan_bar_code
 import pyperclip
+import subprocess, os, platform
 
 def set_text(entry, text):
 	entry.delete(0,END)
@@ -32,6 +33,17 @@ def processar_nfe():
 	set_text(numero_tk_entry, str(numero))
 	set_text(data_tk_entry, dataEmissao.strftime("%d/%m/%Y"))
 	set_text(valor_tk_entry, str(valor))
+
+def abrir_html():
+	chave = chave_tk_entry.get()
+	filepath = nfe_create_pdf(chave)
+	print(filepath)
+	if platform.system() == 'Darwin':       # macOS
+	    subprocess.call(('open', filepath))
+	elif platform.system() == 'Windows':    # Windows
+	    os.startfile(filepath)
+	else:                                   # linux variants
+	    subprocess.call(('xdg-open', filepath))
 
 def scanear_code():
 	chave = scan_bar_code()
@@ -65,12 +77,14 @@ web_cam_photo = web_cam_photo.subsample(5)
 #, heigh = 50, width = 50,
 tk.Button(master, 
           text='Scanear Web Cam', image = web_cam_photo,
-          command=scanear_code).grid(row=0,
-                                    column=2)
+          command=scanear_code).grid(row=0, column=2)
 tk.Button(master, 
           text='Processar', 
-          command=processar_nfe).grid(row=1,
-                                    column=1)
+          command=processar_nfe).grid(row=1, column=1)
+tk.Button(master, 
+          text='Abrir Nota', 
+          command=abrir_html).grid(row=1, column=2)
+
 
 tk.Label(master, text="Serie:").grid(row=2)
 serie_tk_entry = tk.Entry(master)

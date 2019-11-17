@@ -5,6 +5,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime
+import weasyprint
+import shutil
 import os
 import time
 import json
@@ -35,10 +37,11 @@ def nfe_read(driver):
 		
 	return nfe_dict
 
-def nfe_print_png(driver, filename):
-	driver.find_element_by_id("ctl00_ContentPlaceHolder1_hplImprimirAba").click()
+def download_html(driver, filename):
+	driver.find_element_by_id("ctl00_ContentPlaceHolder1_hplImprimir").click()
 	driver.switch_to_window(driver.window_handles[1])
-	driver.get_screenshot_as_file(filename)
+	with open(filename, "w") as f:
+	    f.write(driver.page_source)
 
 
 def nfe_navigate(driver, chave):
@@ -124,9 +127,9 @@ def nfe_download_to_cache(chave):
 
 	newpath = "cache/%s/%s" % (chave_fields["YY"], chave_fields["MM"])
 	if not os.path.exists(newpath):
-	    os.makedirs(newpath)
+	    shutil.copytree("cache/css", newpath + "/css")
 
-	if os.path.isfile(cache_path(chave, "json")) and os.path.isfile(cache_path(chave, "png")):
+	if os.path.isfile(cache_path(chave, "json")) and os.path.isfile(cache_path(chave, "html")):
 		print("%s hit cache" % chave)
 		return True
 
@@ -139,7 +142,7 @@ def nfe_download_to_cache(chave):
 	nfe_download_json(driver, cache_path(chave, "json"))
 
 	print("Saving SnapShot")
-	nfe_print_png(driver, cache_path(chave, "png"))
+	download_html(driver, cache_path(chave, "html"))
 
 	print("Finishing section")
 	driver.quit()
@@ -153,8 +156,12 @@ def download_json(chave):
 	with open(cache_path(chave, "json"), 'r') as f:
 		return json.load(f)
 
-def download_png_path(chave):
-	if nfe_download_to_cache(chave):
-		return False
-	return cache_path(chave, "png")
+def nfe_create_pdf(chave):
+	if not nfe_download_to_cache(chave):
+		return
+	pdf = weasyprint.HTML(cache_path(chave, "html")).write_pdf()
+	with open(cache_path(chave, "pdf"), 'wb') as f:
+		f.write(pdf)
+
+	return cache_path(chave, "pdf")
 

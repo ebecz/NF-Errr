@@ -1,0 +1,112 @@
+﻿#notas
+{
+	margin: 10px 0px 10px 40px;
+	line-height: 20px;
+}
+
+#divContingencia
+{
+	float: left;
+	width: 327px;
+	margin: 8px 10px 18px 40px;
+	*margin: 10px 10px 18px 40px;
+	background-image: url('../imagens/barra_servicos_estendida.png');
+	background-repeat: no-repeat;
+	background-position: left top;
+	background-color: #fcfaf6;
+	border: solid 1px #f7e2c2;	
+	overflow: visible;
+}
+
+#divInformes
+{
+    position: relative;
+	float: right;
+	width: 327px;
+	margin: 8px 25px 0px 17px;
+	*margin: 8px 25px 0px 10px;
+	background-image: url('../imagens/barra_informes_estendida_Off.png');
+	background-repeat: no-repeat;
+	background-position: left top;
+	background-color: #fcfaf6;
+	border: solid 1px #f7e2c2;		
+	overflow: visible;
+}
+
+#divInformes:hover
+{
+	float: right;
+	width: 327px;
+	margin: 8px 25px 0px 17px;
+	*margin: 8px 25px 0px 10px;
+	background-image: url('../imagens/barra_informes_estendida_On.png');
+	background-repeat: no-repeat;
+	background-position: left top;
+	background-color: #fcfaf6;
+	border: solid 1px #f7e2c2;		
+	overflow: visible;
+}
+
+#divDenegacao
+{
+	float: right;
+	width: 327px;
+	margin: 8px 25px 0px 17px;
+	*margin: 8px 25px 0px 10px;
+	background-image: url('../imagens/barra_denegacao_estendida.png');
+	background-repeat: no-repeat;
+	background-position: left top;
+	background-color: #fcfaf6;
+	border: solid 1px #f7e2c2;		
+	overflow: visible;
+}
+
+#divContingencia table, #divInformes table, #divDenegacao table
+{
+	border: 0px solid transparent;
+	margin: 35px 10px 10px 25px;
+}
+
+#divContingencia table caption
+{
+	font-weight: bold;
+	text-align: left;
+	color: #c5752e;
+}
+
+#divContingencia table th, #divInformes table th, #divDenegacao table th
+{
+	display: none;
+}
+
+#divContingencia table tr td, #divInformes table tr td, #divDenegacao table tr td
+{
+	border: 0px solid transparent;
+	padding: 5px 0px 5px 0px;
+}
+
+#divContingencia table *, #divInformes table *, #divDenegacao table *
+{	
+	border: 0px solid transparent;
+}
+
+#divServicosMaisAcessados
+{
+	background-color: #fcfaf6;
+	border: solid 1px #f7e2c2;
+	width: 683px;
+	margin: 10px 40px 18px 40px;
+	text-align: left;
+	height: 100px;
+	*overflow: visible;
+	*clear: both;
+	font-family: Trebuchet MS;
+	font-size: 13px;
+}
+
+#avisos
+{
+	margin: -7px 0px 0px 0px;
+	*margin: 0px 0px 0px 0px;
+	float: left;
+}
